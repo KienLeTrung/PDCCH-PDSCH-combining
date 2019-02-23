@@ -73,7 +73,7 @@ Emails: umer.salim@tcl.com}
 \maketitle
 
 \begin{abstract}
-5G will be supporting new services that have remarkably higher requirements than LTE 4G and Ultra-reliable and low-latency communication (URLLC) is one of those emerged categories. The strict requirements of URLLC demand new techniques in physical layer design. In this paper, we propose an intelligent combining of retransmissions of physical downlink control channel (PDCCH) and the physical downlink data channel (PDSCH). In the proposed scheme, the downlink control information (DCI) on PDCCH already indicates the location of a potential retransmission of the corresponding PDSCH and thus a retransmission of the DCI is only required when no HARQ feedback is received. Moreover, the retransmitted DCI can be combined with the first transmission so that resource consumption and latency are reduced compared to the conventional scheme. Theoretical calculations and simulation results show a decrease of latency relating to resource blocking and resource consumption.
+5G will be supporting new services that have remarkably higher requirements than LTE 4G and Ultra-reliable and low-latency communication (URLLC) is one of those emerged categories. The strict requirements of URLLC demand new techniques in physical layer design. In this paper, we propose an intelligent combining of retransmissions of physical downlink control channel (PDCCH) and the physical downlink data channel (PDSCH). In the proposed scheme, the downlink control information (DCI) on PDCCH already indicates the location of a potential retransmission of the corresponding PDSCH and thus a retransmission of the DCI is only required when no HARQ feedback is received. Moreover, the retransmitted DCI can be combined with the first transmission so that resource consumption and latency are reduced compared to the conventional scheme. Theoretical calculations and simulation results show a decrease of resource consumption.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -97,7 +97,7 @@ Besides, in eMBB and URLLC multiplexing, pre-emption indication is used in downl
 \end{comment}
 
 \subsection{Techniques under research for next 3GPP releases}\label{IBB}
-New techniques in transmission scheme to attain the strict requirements have attracted the attention of many companies. The proposals focus on repetition-based transmission aiming to relax the complexity of control and channel design. A repetition in frequency domain is proposed in \cite{b1} that is equivalent to a utility of a higher aggregation level (AL). It may cause PDCCH blocking due to a shortage of resources in a control resource set (CORESET) so the UEs have to wait for a CORESET in the next transmission occasion. Besides, a PDCCH can be repeated in time domain without waiting for hybrid automatic repeat request (HARQ) feedback considered in \cite{b2}. PDSCH is delayed until the success of PDCCH transmission. The process will stop when PDCCH is decoded successfully in the UE and the gNB receives ACK of PDCCH. After obtaining DCI from PDCCH, the UE can start to decode PDSCH. This method may cause a waste of resources and resource block if ACK feedback is not fast enough to stop the repetition process of the entire PDCCHs. 
+New techniques in transmission scheme to attain the strict requirements have attracted the attention of many companies. The proposals focus on repetition-based transmission aiming to relax the complexity of control and channel design. A repetition in frequency domain is proposed in \cite{b1} that is equivalent to a utility of a higher aggregation level (AL). It may cause PDCCH blocking due to a shortage of resources in a control resource set (CORESET) so the users (UEs) have to wait for a CORESET in the next transmission occasion. Besides, a PDCCH can be repeated in time domain without waiting for hybrid automatic repeat request (HARQ) feedback considered in \cite{b2}. PDSCH is delayed until PDCCH is decoded successfully in the UE and the base station (gNB) receives acknowledgement (ACK) of PDCCH. After obtaining DCI from PDCCH, the UE can start to decode PDSCH. This method may cause a waste of resources and resource block if ACK feedback is not fast enough to stop the repetition process of the entire PDCCHs. 
 
 \cite{b3} considers a PDCCH repetition with asymmetric HARQ where the retransmission has a lower code rate than the initial transmission to increase reliability. Thanks to the retransmission, the requirement of block error rate (BLER) target for the initial transmission is relaxed and a high overhead to attain the low BLER target is eluded. Most of data is successful in the first transmission so the resource for the retransmission can be allocated to other UEs to avoid being wasted. However, in case the second transmission becomes necessary, it requires a much bigger resource than the first one.
 
@@ -156,11 +156,11 @@ From \eqref{eq3}, the reliability of URLLC can be achieved with $P_{c}$, $P_{d1}
 \section{PDCCH and PDSCH combining in downlink transmission of URLLC}
 
 \subsection{Transmission scheme}\label{AA}
-In the conventional transmission scheme with HARQ process, the gNB transmits PDCCH and PDSCH in the downlink at the beginning of the transmission. If the UE fails to decode PDCCH then PDSCH also cannot be decoded because its location is unknown to the UE so the gNB will not receive ACK/NACK from the UE. After detecting the missing HARQ response, the gNB knows that PDCCH is not detected by the UE. Thus, it reschedules data by sending again both PDCCH and PDSCH. It causes very sub-optimal resource usage because both control and data need to be transmitted again and most probably with lower code rate. Moreover, it leads to increase of data latency when the UE needs to wait for the full retransmission.
+In the transmission scheme with HARQ process for repetitions to relax the reliability requirement of each transmission as \cite{b3} and \cite{b4}, the gNB transmits PDCCH and PDSCH in the downlink at the beginning of the transmission. If the UE fails to decode PDCCH then PDSCH also cannot be decoded because its location is unknown to the UE so the gNB will not receive ACK/NACK from the UE. After detecting the missing HARQ response, the gNB knows that PDCCH is not detected by the UE. Thus, it reschedules data by sending again both PDCCH and PDSCH. It causes very sub-optimal resource usage because both control and data need to be transmitted again and most probably with lower code rate. Moreover, it leads to increase of data latency when the UE needs to wait for the full retransmission.
 
 The retransmission of complete PDCCH and PDSCH as if it is a fresh transmission can be avoided by repeating PDCCH and PDSCH partially and combining these multiple transmitted PDCCHs and PDSCHs. In this scheme as shown in Fig.~\ref{fig1}, for the original transmission, the gNB transmits PDCCH (C1) and PDSCH (D1). When no HARQ response is received at the gNB for PDSCH at the expected time, it retransmits special versions of PDCCH and PDSCH that have shorter length in the next transmission occasion while the UE stores the current transmission occasion (containing C1 and D1). The two transmissions of control (C1 and C2) are designed such that they can be combined for joint detection (explained in \ref{BB}). Additionally to this, the combined PDCCH enables the UE to locate the two transmissions of PDSCH, the original transmission (D1) and the retransmission (D2) in order to combine them. This allows the network to enhance the reliability of both PDCCH and PDSCH for URLLC users in a very timely manner which can be a key to meet their requirements in harsh environments. 
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centerline{\includegraphics[scale=0.6]{fig1.png}}
 \caption{Reliable transmission of DL assignment information.}
 \label{fig1}
@@ -170,9 +170,11 @@ To allow the combination of PDCCHs, the content of DCI on PDCCH must be the same
 
 In case the UE can decode PDCCH (C1) but encounters an error in decoding PDSCH (D1), PDSCH (D2) can be retransmitted independently in the next transmission occasion without a request of another PDCCH because the resource allocation information of this repetition is known by the UE by decoding the initial PDCCH. After that, the UE combines these two transmissions to decode data. It avoids the blockage of PDSCH repetition due to the shortage of resource for PDCCH. 
 
+There is no retransmission if the UE is able to correctly decode D1 based upon C1 and sends ACK to the gNB.
+
 When the first DCI on PDCCH (C1) indicates locations of data transmissions on PDSCHs (D1 and D2) in the current slot and the next transmission slot, it means that the resource for the data retransmission is configured. It can lead to a waste of resources in case PDCCH and PDSCH are decoded successfully by the UE and there is no need for a retransmission. Therefore, this configured resource can be shared by a group of UEs and dynamically allocated to the UE needing a retransmission as shown in Fig.~\ref{fig2}. There is a need to retransmit data for the UE2 when it returns NACK while the other UEs return ACK. Therefore, the gNB retransmits data for the UE2 in D\textsubscript{rep}. The starting time of the initial transmissions is not required to be synchronized, the gNB only needs to receive HARQ feedback from the UEs before the starting time of the configured resource for the retransmission.
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centerline{\includegraphics[scale=0.4]{fig2.png}}
 \caption{Shared configured resource of PDSCH repetition.}
 \label{fig2}
@@ -183,7 +185,7 @@ The same principle can be applied to PDCCH repetition. A resource in the next tr
 One disadvantage of this method is that it only allows one UE with the first coming NACK an opportunity to receive a second transmission during D\textsubscript{rep}. Other UEs reporting a NACK are blocked from receiving a second transmission. However, due to a high reliability of URLLC transmission, the probability that two or more UEs encounter the errors at the same time is small (below 10\textsuperscript{-4}) so this method allows a good use of the configured resource. The blocking probability depends on the number of the UEs configured to that resource. Thus, the number of the UEs configured to a resource are chosen to balance resource efficiency and reliability.
 
 \subsection{Design of PDCCH and PDSCH repetions}\label{BB}
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centerline{\includegraphics[scale=0.35]{fig3.png}}
 \caption{Processing a DCI to form and combine two PDCCHs.}
 \label{fig3}
@@ -216,14 +218,14 @@ The saving resource becomes significantly important when many UEs share resource
 
 The scheme in Section \ref{AA} and \ref{BB} requires the UE to combine multiple PDCCHs from different control occasions. This presents a challenge to UE blind decoding complexity if no additional constraints on PDCCH mapping are enforced. In principle, the location of PDCCH is unknown to a UE so each UE must perform blind decode until it finds a DCI that passes the CRC. In the PDCCH combining, the complexity of blind decode becomes more severe when the number of blind decodes grows remarkably. The UE monitors the current control resource to determine by blind decoding if a new DCI for the UE is received in the slot. If the UE fails to detect a PDCCH intended for it, it combines the current monitored occasion with the previous stored occasion for a potential combining. The number of stored occasion is limited to 1 to reduce memory and energy consumption. Fig.~\ref{fig4}\subref{4a} shows this results in a large number of blind decode combinations of the different PDCCH candidates. In a fully exhaustive scheme, the maximum number of combinations is the product of PDCCH candidates in two control occasions. 
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centering
 \subfloat[No mapping.\label{4a}]{%
-\includegraphics[width=41mm,height=20mm]{fig4.png}}
+\includegraphics[scale=0.22]{fig4.PNG}}
 \hfill
 \qquad
 \subfloat[One-to-one mapping.\label{4b}]{%
-\includegraphics[width=41mm,height=20mm]{fig5.png}}
+\includegraphics[scale=0.22]{fig5.PNG}}
 \hfill
 
 \caption{Combining of blind decode candidates.}
@@ -235,14 +237,14 @@ The number of blind decodes in PDCCH combining decreases dramatically if the gNB
 Based on the same principle of one-to-one correspondence of PDCCH
 combining, the improvement of URLLC\textquotesingle s service quality through interference cancellation and frequency diversity in PDCCH transmission can be achieved by frequency hopping. In one method, PDCCH candidates can be in different CORESETs in the same band but these candidates are hopped over different frequencies and have an association between locations in the two occasions, such as a one-to-one correspondence between the candidates in Fig.~\ref{fig5}\subref{5a}. In another method to allow additional frequency diversity advantage in PDCCH combining, the initial transmission and repetition are allocated to the disjoint frequency bands with large frequency distance. As NR does not allow a single CORESET to change its frequency allocation in time, one way to achieve this is that the gNB configures two CORESETs at disjoint frequency locations as illustrated in Fig.~\ref{fig5}\subref{5b}.
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centering
 \subfloat[Same band's CORESETs.\label{5a}]{%
-\includegraphics[scale=0.33]{fig6.png}}
+\includegraphics[scale=0.25]{fig7.PNG}}
 \hfill
 \qquad
 \subfloat[Different bands' CORESETs.\label{5b}]{%
-\includegraphics[width=40mm,height=30mm]{fig7.png}}
+\includegraphics[scale=0.3]{fig6.PNG}}
 \hfill
 \caption{Frequency hopping in PDCCH combining.}
 \label{fig5}
@@ -256,39 +258,19 @@ In LTE, soft combining of PDSCHs with different redundancy versions has been sta
 There still exists the challenges and some prerequisites that need to be standardized in the next 3GPP releases to make the implementation of this scheme feasible. The mapping rule plays a pivotal role in PDCCH combining to reduce the number of blind decodes. However, it also reduces the scheduling flexibility of the gNB so it is necessary that 3GPP considers the advantages and disadvantages of mapping rule in different scenarios so as to accept and make it become standard. In addition, memory and power consumption of the UE must be enhanced. The reason is that a UE must always find and decode the incoming DCI in two steps. First, it decodes the current slot to check the presence of PDCCH. Subsequently, if no PDCCH is found, the UE combines the current slot with the previous slot to increase reliability of PDCCH so it has more chance to decode correctly PDCCH if it exists. Then if there is no PDCCH found, that slot is stored for the combining of next transmission occasion so memory of the UE has to be taken into account. A specification must be agreed among the manufacturers to guarantee the ability of the UE devices to be compatible with the proposed scheme. The next point is to define the fields of DCI because one DCI is used to indicate resource allocation of two PDSCHs.  
 \end{comment}
 
-\section{Simulation results}
-
-The simulation is performed in link level. Polar code is used to encode the input codeword (DCI) with 48 bits consisting of 24 information bits and 24 CRC bits. The encoding mechanism of the encoder follows 3GPP standard \cite{b8}. The code rates 0.3 and 0.2 are used in different scenarios. The output codeword is modulated in QPSK and transmitted in channel. SCS is 60kHz. The decoder calculates LLRs and uses them to decode the receiving signal. The decoder is min-sum Successive cancellation list (SCL) decoder with list size 8 \cite{b9}.
-
-\begin{figure}[htbp]
-\centerline{\includegraphics[width=80mm,height=30mm]{fig8.png}}
-\caption{BLER of conventional and proposed schemes.}
-\label{fig8}
-\end{figure}
-
-Fig.~\ref{fig8} shows a comparison between the initial transmissions of two schemes. The first scheme is a conventional one where a long packet with low rate 0.2 containing 240 bits is used straightaway for the initial transmission. The second one is the proposed scheme where a short packet with higher rate 0.3 containing 160 bits is used in the initial transmission. Subsequently, if the initial packet is not decoded correctly, the gNB will only sends 80 additional bits so that the UE can combine these 80 bits and the initial stored 160 bits to create a packet with 240 bits as the conventional scheme. 
-
-As can be seen at SNR -2dB, BLERs of the conventional scheme with long packet and the combining scheme with short packet are 0.001 and 0.14, respectively. This means that in 1000 times, the conventional scheme succeeds 999 times while the combining scheme succeeds 860 times without a need of retransmisison and combining. Thereby, by using the combining scheme, the system can save time and frequency resources in 860 times. There are 80 bits saved each time. In QPSK modulation, a resource element (RE) is allocated to two bits so 80 bits are equivalent to 40 REs being approximate to 4 physical resource blocks (PRB). With SCS being 60kHz, one PRB occupies a bandwidth of 720kHz. Thus, in each transmission, a bandwidth of 2.88MHz is spared and can be allocated to other UEs so that the blocking probability of other UEs as well as the UE of interest itself decreases.
-
-The proposed scheme also brings an efficiency of resource consumption compared to other schemes applying retransmission and combining in \cite{b3} and \cite{b4}. In the proposed scheme, in total there are 240 bits transmitted in case of the initial transmission's failure (140 times in 1000 times). While in other schemes with conventional HARQ process, an entire packet with lower rate 0.2 containing 240 bits is transmitted in the retransmission after the initial packet's failure with rate 0.3 and 160 bits. In total, there are 400 bits transmitted.
-
-In 140 times, the conventional scheme succeeds in the first transmission while the combining scheme fails and a retransmission is required so that the packets can be combined to have rate 0.2 as the conventional scheme and achieves target reliability. It leads to latency in the proposed scheme including HARQ feedback's transmission time, transmission time interval of retransmission and processing time of the combined packet. HARQ feedback consumes 1 OFDM symbol. If PDCCH is not decoded, the gNB waits after the normal time for an appearance of feedback to decide PDCCH failure and retransmits the additional bits of both PDCCH and PDSCH. These PDCCH and PDSCH are short versions as mentioned in Section \ref{BB} and only consumes 3 OFDM symbols. The maximum processing time of the decoder to decode the combined PDCCH anf PDSCH is 0.125ms equivalent to 7 OFDM symbols with SCS 60kHz (one slot with SCS 60kHz has 14 OFDM symbols spreading in 0.25ms). Therefore, latency in 140 times over 1000 times of the proposed scheme is at least 11 OFDM symbols more than the conventional schemes. This amount is approximate to 1 slot with 0.25 ms that is still acceptable to achieve the latency requirement 1ms of URLLC.
-
-Table~\ref{tab1} summarizes the above calculation and shows resource consumption over 1000 packets of three schemes to achieve the same reliability.
-
-\begin{table}[htbp]
-\caption{Resource and latency comparison over 1000 packet}
+\begin{table*}[htbp]
+\caption{Resource and latency comparison over 1000 packet transmitted over AWGN channel with SNR -2$dB$ and SCS 60kHz}
 \begin{center}
-\begin{tabular}{ |p{4.6em}|p{2em}|p{2em}|p{2em}|p{2em}|p{2em}|p{2em}|p{2.8em}|}
+\begin{tabular}{ |p{4.6em}|p{3em}|p{2em}|p{2em}|p{3em}|p{2em}|p{2em}|p{5em}|p{5em}|}
  \hline
- \multirow{2}{6em}{} & \multicolumn{3}{p{6em}}{\textbf{$1^{st}$ transmission's success}}& \multicolumn{3}{|p{6em}|}{\textbf{$2^{nd}$ transmission's success}}& \multirow{2}{6em}{\textbf{Total resource (REs)}}\\\cline{2-7}
- &\textbf{Quant} & \textbf{Res (REs)}&\textbf{Lat (ms)}&\textbf{Quant} & \textbf{Res (REs)}&\textbf{Lat (ms)} \\
+ \multirow{2}{6em}{} & \multicolumn{3}{p{6em}}{\textbf{$1^{st}$ transmission's success}}& \multicolumn{3}{|p{6em}|}{\textbf{$2^{nd}$ transmission's success}}& \multirow{2}{6em}{\textbf{Average expected resource (REs)}}& \multirow{2}{6em}{\textbf{Average expected latency (ms)}}\\\cline{2-7}
+ &\textbf{Percent} & \textbf{Res (REs)}&\textbf{Lat (ms)}&\textbf{Percent} & \textbf{Res (REs)}&\textbf{Lat (ms)} & &  \\
  \hline
- Conventional&$999$&$120$& $0.25$& $0$& $0$ & $0$ &$119880$\\
+ Conventional&$0.999$&$120$& $0.25$& $0$& $0$ & $0$ &$120$&$0.25$\\
  \hline
- Prior art\cite{b3} and \cite{b4} &$860$&$80$& $0.25$& $139$& $120$ &  $0.5$&$96600$\\
+ Prior art\cite{b3} and \cite{b4} &$0.860$&$80$& $0.25$& $0.139$& $120$ &  $0.5$&$96.70$&$0.28$\\
   \hline
- Proposed scheme &$860$&$80$&$0.25$ & $139$& $40$ &  $0.5$&$85480$\\
+ Proposed scheme &$0.860$&$80$&$0.25$ & $0.139$& $40$ &  $0.5$&$85.57$&$0.28$\\
  
  
 
@@ -296,11 +278,32 @@ Table~\ref{tab1} summarizes the above calculation and shows resource consumption
 \end{tabular}
 \label{tab1}
 \end{center}
-\end{table}
+\end{table*}
+\section{Simulation results}
+
+The simulation is performed in link level. Polar code is used to encode the input codeword (DCI) with 48 bits consisting of 24 information bits and 24 CRC bits. The encoding mechanism of the encoder follows 3GPP standard \cite{b8}. The code rates 0.3 and 0.2 are used in different scenarios. The output codeword is modulated in QPSK and transmitted over AWGN channel. The decoder calculates LLRs and uses them to decode the receiving signal. The decoder is min-sum Successive cancellation list (SCL) decoder with list size 8 \cite{b9}.
+
+\begin{figure}[htb]
+\centerline{\includegraphics[scale=0.3]{fig8.png}}
+\caption{BLER of conventional and proposed schemes.}
+\label{fig8}
+\end{figure}
+
+Fig.~\ref{fig8} shows a comparison between the initial transmissions of two schemes. The first scheme is a conventional one where a long packet with low rate 0.2 containing 240 bits is used for the initial transmission. The second one is the proposed scheme where a short packet with higher rate 0.3 containing 160 bits is used in the initial transmission. Subsequently, if the initial packet is not decoded correctly, the gNB will only sends 80 additional bits so that the UE can combine these 80 bits and the initial stored 160 bits to create a packet with 240 bits as the conventional scheme. 
+
+As can be seen at SNR -2dB, BLERs of the conventional scheme with long packet and the combining scheme with short packet are 0.001 and 0.14, respectively. This means that in 1000 times, the conventional scheme succeeds 999 times while the combining scheme succeeds 860 times without a need of retransmisison and combining. Thereby, by using the combining scheme, the system can save time and frequency resources in 860 times. There are 80 bits saved each time. In QPSK modulation, a resource element (RE) is allocated to two bits so 80 bits are equivalent to 40 REs being approximate to 4 physical resource blocks (PRB). With SCS being 60kHz, one PRB occupies a bandwidth of 720kHz. Thus, in each transmission, a bandwidth of 2.88MHz is spared and can be allocated to other UEs so that the blocking probability of other UEs as well as the UE of interest itself decreases.
+
+The proposed scheme also brings an efficiency of resource consumption compared to other schemes applying retransmission and combining in \cite{b3} and \cite{b4}. In the proposed scheme, in total there are 240 bits transmitted in case of the initial transmission's failure (140 times in 1000 times). While in other schemes with conventional HARQ process, an entire packet with lower rate 0.2 containing 240 bits is transmitted in the retransmission after the initial packet's failure with rate 0.3 and 160 bits. In total, there are 400 bits transmitted.
+
+In 140 times, the conventional scheme succeeds in the first transmission while the combining scheme fails and a retransmission is required so that the packets can be combined to have rate 0.2 as the conventional scheme and achieve target reliability. It leads to latency in the proposed scheme including HARQ feedback's transmission time, transmission time interval of retransmission and processing time of the combined packet. HARQ feedback consumes 1 OFDM symbol. If PDCCH is not decoded, the gNB waits after the normal time for an appearance of feedback to decide PDCCH failure and retransmits the additional bits of both PDCCH and PDSCH. These PDCCH and PDSCH are short versions as mentioned in Section \ref{BB} and only consumes 3 OFDM symbols. The maximum processing time of the decoder to decode the combined PDCCH anf PDSCH is 0.125ms equivalent to 7 OFDM symbols with SCS 60kHz (one slot with SCS 60kHz has 14 OFDM symbols spreading in 0.25ms). Therefore, latency in 140 times over 1000 times of the proposed scheme is at least 11 OFDM symbols more than the conventional schemes. This amount is approximate to 1 slot with 0.25 ms that is still acceptable to achieve the latency requirement 1ms of URLLC.
+
+Table~\ref{tab1} summarizes the above calculation and shows the expected resource consumption as well as latency over 1000 packets of three schemes at SNR of -2dB and SCS of 60kHz to achieve the same reliability.
+
+
 
 \begin{comment}
 Fig.~\ref{fig8} shows BLER of PDCCH combining in comparison to the legacy NR scheme. In the first transmission, the output codeword on PDCCH with code rate 0.3 has 160 bits and is transmitted to the receiver. In the second transmission, a lower code rate 0.2 is used to generate a longer output codeword corresponding to 240 bits but only the additional bits due to a lower code rate are transmitted. For this reason, only 80 bits instead of 240 bits are transmitted in the second transmission. At the decoder, the LLRs of the first transmission and the second transmission are combined and the decoder decodes the codeword with the rate 0.2. The performance of the combined codeword represented by the blue curve is remarkably better than that of the transmission as in the legacy NR scheme represented by the red curve with a margin being about 2dB. This means that the information of the additional bits in the second transmission increases the reliability of PDCCH transmission without consuming much resources for the second transmission of the whole PDCCH with a higher AL as in the conventional scheme as shown in \ref{CC}. When $P^{e}_{c}$ in \eqref{eq2} decreases, the whole transmission's reliability increases.  
-\end{comment}
+
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[scale=0.2]{fig9.png}}
@@ -309,7 +312,7 @@ Fig.~\ref{fig8} shows BLER of PDCCH combining in comparison to the legacy NR sch
 \end{figure}
 
 Fig.~\ref{fig9} shows BLER of PDCCH combined with the additional bits compared to that of PDCCH where half of bits are replaced by the bits in the better retransmission channel. The BLER of the codeword with replaced bits (black curve with cross marker) is better than the first codeword (dashed line red curve) but is much worse than the codeword combined  with the additional bits (blue curve with circle marker) with a margin of 2dB. Thus, in the retransmission, the additional bits due to a lower code rate should be transmitted to combine with the first codeword so the decoder works with a codeword with a lower rate and can achieve better BLER.
-
+\end{comment}
 \section{Conclusion}
 
 The emergence of URLLC in 5G requires an improvement in physical layer design. The state-of-the-art schemes achieve reliability at cost of latency and resource. In this paper, a downlink transmission scheme applying an intelligent combining based approach to get improved PDCCH and PDSCH detection while reducing latency and resource consumption is presented. The designs of PDCCH and PDSCH and the techniques to implement the combining are also explained. 
