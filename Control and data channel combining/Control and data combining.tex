@@ -161,28 +161,32 @@ In the transmission scheme with HARQ process for repetitions to relax the reliab
 The retransmission of complete PDCCH and PDSCH as if it is a fresh transmission can be avoided by repeating PDCCH and PDSCH partially and combining these multiple transmitted PDCCHs and PDSCHs. In this scheme as shown in Fig.~\ref{fig1}, for the original transmission, the gNB transmits PDCCH (C1) and PDSCH (D1). When no HARQ response is received at the gNB for PDSCH at the expected time, it retransmits special versions of PDCCH and PDSCH that have shorter length in the next transmission occasion while the UE stores the current transmission occasion (containing C1 and D1). The two transmissions of control (C1 and C2) are designed such that they can be combined for joint detection (explained in \ref{BB}). Additionally to this, the combined PDCCH enables the UE to locate the two transmissions of PDSCH, the original transmission (D1) and the retransmission (D2) in order to combine them. This allows the network to enhance the reliability of both PDCCH and PDSCH for URLLC users in a very timely manner which can be a key to meet their requirements in harsh environments. 
 
 \begin{figure}[htb]
-\centerline{\includegraphics[scale=0.6]{fig1.png}}
-\caption{Reliable transmission of DL assignment information.}
+\centering
+\subfloat[No mapping.\label{1a}]{%
+\includegraphics[scale=0.14]{fig1.png}}
+\hfill
+\qquad
+\subfloat[Reliable transmission of DL assignment information.\label{1b}]{%
+\includegraphics[scale=0.09]{fig2.png}}
+\hfill
+
+\caption{Shared configured resource of PDSCH repetition.}
 \label{fig1}
 \end{figure}
 
-To allow the combination of PDCCHs, the content of DCI on PDCCH must be the same for both the initial transmission and the retransmission. One way is to make the initial and retransmitted PDCCHs indicate the resource allocation information for both two transmissions as illustrated in Fig.~\ref{fig1}. This does not necessarily mean that all the fields in the DCI relevant to scheduling of resources, precoding, layers, MCS etc are doubled up. The resources for the retransmission PDSCH (D2) can be pre-defined as a function of resources indicated for the original transmission (D1). The other transmission parameters, like MCS, RV etc can remain the same.
+To allow the combination of PDCCHs, the content of DCI on PDCCH must be the same for both the initial transmission and the retransmission. One way is to make the initial and retransmitted PDCCHs indicate the resource allocation information for both two transmissions as illustrated in Fig.~\ref{fig1}\subref{1a}. This does not necessarily mean that all the fields in the DCI relevant to scheduling of resources, precoding, layers, MCS etc are doubled up. The resources for the retransmission PDSCH (D2) can be pre-defined as a function of resources indicated for the original transmission (D1). The other transmission parameters, like MCS, RV etc can remain the same.
 
 In case the UE can decode PDCCH (C1) but encounters an error in decoding PDSCH (D1), PDSCH (D2) can be retransmitted independently in the next transmission occasion without a request of another PDCCH because the resource allocation information of this repetition is known by the UE by decoding the initial PDCCH. After that, the UE combines these two transmissions to decode data. It avoids the blockage of PDSCH repetition due to the shortage of resource for PDCCH. 
 
 There is no retransmission if the UE is able to correctly decode D1 based upon C1 and sends ACK to the gNB.
 
-When the first DCI on PDCCH (C1) indicates locations of data transmissions on PDSCHs (D1 and D2) in the current slot and the next transmission slot, it means that the resource for the data retransmission is configured. It can lead to a waste of resources in case PDCCH and PDSCH are decoded successfully by the UE and there is no need for a retransmission. Therefore, this configured resource can be shared by a group of UEs and dynamically allocated to the UE needing a retransmission as shown in Fig.~\ref{fig2}. There is a need to retransmit data for the UE2 when it returns NACK while the other UEs return ACK. Therefore, the gNB retransmits data for the UE2 in D\textsubscript{rep}. The starting time of the initial transmissions is not required to be synchronized, the gNB only needs to receive HARQ feedback from the UEs before the starting time of the configured resource for the retransmission.
+When the first DCI on PDCCH (C1) indicates locations of data transmissions on PDSCHs (D1 and D2) in the current slot and the next transmission slot, it means that the resource for the data retransmission is configured. It can lead to a waste of resources in case PDCCH and PDSCH are decoded successfully by the UE and there is no need for a retransmission. Therefore, this configured resource can be shared by a group of UEs and dynamically allocated to the UE needing a retransmission as shown in Fig.~\ref{fig1}\subref{1b}. There is a need to retransmit data for the UE2 when it returns NACK while the other UEs return ACK. Therefore, the gNB retransmits data for the UE2 in D\textsubscript{rep}. The starting time of the initial transmissions is not required to be synchronized, the gNB only needs to receive HARQ feedback from the UEs before the starting time of the configured resource for the retransmission.
 
-\begin{figure}[htb]
-\centerline{\includegraphics[scale=0.4]{fig2.png}}
-\caption{Shared configured resource of PDSCH repetition.}
-\label{fig2}
-\end{figure}
+
 
 The same principle can be applied to PDCCH repetition. A resource in the next transmission occasion is allocated to PDCCH repetition of a group of the UEs. If the first PDCCH is decoded and the retransmission is not necessary, the configured resource will be allocated to PDCCH of other UEs in the group.
 
-One disadvantage of this method is that it only allows one UE with the first coming NACK an opportunity to receive a second transmission during D\textsubscript{rep}. Other UEs reporting a NACK are blocked from receiving a second transmission. However, due to a high reliability of URLLC transmission, the probability that two or more UEs encounter the errors at the same time is small (below 10\textsuperscript{-4}) so this method allows a good use of the configured resource. The blocking probability depends on the number of the UEs configured to that resource. Thus, the number of the UEs configured to a resource are chosen to balance resource efficiency and reliability.
+One disadvantage of this method is that it only allows one UE with the first coming NACK an opportunity to receive a second transmission during D\textsubscript{rep}. Other UEs reporting a NACK are blocked from receiving a second transmission. However, due to a high reliability of URLLC transmission, the probability that two or more UEs encounter the errors at the same time is small (below 10\textsuperscript{-4}) so this method allows a good use of the configured resource. 
 
 \subsection{Design of PDCCH and PDSCH repetions}\label{BB}
 \begin{figure}[htb]
@@ -261,16 +265,16 @@ There still exists the challenges and some prerequisites that need to be standar
 \begin{table*}[htbp]
 \caption{Resource and latency comparison over 1000 packet transmitted over AWGN channel with SNR -2$dB$ and SCS 60kHz}
 \begin{center}
-\begin{tabular}{ |p{4.6em}|p{3em}|p{2em}|p{2em}|p{3em}|p{2em}|p{2em}|p{5em}|p{8em}|p{8em}|}
+\begin{tabular}{ |p{4.6em}|p{3em}|p{2em}|p{2em}|p{3em}|p{2em}|p{2em}|p{5em}|p{8em}|}
  \hline
- \multirow{2}{6em}{} & \multicolumn{3}{p{6em}}{\textbf{$1^{st}$ transmission's success}}& \multicolumn{3}{|p{6em}|}{\textbf{$2^{nd}$ transmission's success}}& \multirow{2}{6em}{\textbf{Average expected resource (REs)}}& \multirow{2}{8em}{\textbf{Average expected latency with 1-UE system (ms)}}& \multirow{2}{8em}{\textbf{Average expected latency with 2-UE system (ms)}}\\\cline{2-7}
- &\textbf{Percent} & \textbf{Res (REs)}&\textbf{Lat (ms)}&\textbf{Percent} & \textbf{Res (REs)}&\textbf{Lat (ms)} & & &  \\
+ \multirow{2}{6em}{} & \multicolumn{3}{p{6em}}{\textbf{$1^{st}$ transmission's success}}& \multicolumn{3}{|p{6em}|}{\textbf{$2^{nd}$ transmission's success}}& \multirow{2}{6em}{\textbf{Average expected resource (REs)}}& \multirow{2}{8em}{\textbf{Average expected latency with 1-UE system (ms)}}\\\cline{2-7}
+ &\textbf{Percent} & \textbf{Res (REs)}&\textbf{Lat (ms)}&\textbf{Percent} & \textbf{Res (REs)}&\textbf{Lat (ms)} & &   \\
  \hline
- Conventional&$0.999$&$120$& $0.25$& $0$& $0$ & $0$ &$120$&$0.250$&$0.287$\\
+ Conventional&$0.999$&$120$& $0.25$& $0$& $0$ & $0$ &$120$&$0.250$\\
  \hline
- Prior art\cite{b3} and \cite{b4} &$0.860$&$80$& $0.25$& $0.139$& $120$ &  $0.5$&$96.70$&$0.285$&$0.285$\\
+ Prior art\cite{b3} and \cite{b4} &$0.860$&$80$& $0.25$& $0.139$& $120$ &  $0.5$&$96.70$&$0.285$\\
   \hline
- Proposed scheme &$0.860$&$80$&$0.25$ & $0.139$& $40$ &  $0.5$&$85.57$&$0.285$&$0.285$\\
+ Proposed scheme &$0.860$&$80$&$0.25$ & $0.139$& $40$ &  $0.5$&$85.57$&$0.285$\\
  
  
 
@@ -283,19 +287,39 @@ There still exists the challenges and some prerequisites that need to be standar
 
 The simulation is performed in link level. Polar code is used to encode the input codeword (DCI) with 48 bits consisting of 24 information bits and 24 CRC bits. The encoding mechanism of the encoder follows 3GPP standard \cite{b8}. The code rates 0.3 and 0.2 are used in different scenarios. The output codeword is modulated in QPSK and transmitted over AWGN channel. The decoder calculates LLRs and uses them to decode the receiving signal. The decoder is min-sum Successive cancellation list (SCL) decoder with list size 8 \cite{b9}.
 
+
 \begin{figure}[htb]
-\centerline{\includegraphics[scale=0.3]{fig8.png}}
-\caption{BLER of conventional and proposed schemes.}
+\centering
+\subfloat[BLER of conventional and proposed schemes.\label{8a}]{%
+\includegraphics[scale=0.21]{fig8.png}}
+\hfill
+\qquad
+\subfloat[Latency in 2-UE system.\label{8b}]{%
+\includegraphics[scale=0.23]{fig10.png}}
+\hfill
+\caption{Simulation results.}
 \label{fig8}
 \end{figure}
 
-Fig.~\ref{fig8} shows a comparison between the initial transmissions of two schemes. The first scheme is a conventional one where a long packet with low rate 0.2 containing 240 bits is used for the initial transmission. The second one is the proposed scheme where a short packet with higher rate 0.3 containing 160 bits is used in the initial transmission. Subsequently, if the initial packet is not decoded correctly, the gNB will only sends 80 additional bits so that the UE can combine these 80 bits and the initial stored 160 bits to create a packet with 240 bits as the conventional scheme. 
+Fig.~\ref{fig8}\subref{8a} shows a comparison between the initial transmissions of two schemes. The first scheme is a conventional one where a long packet with low rate 0.2 containing 240 bits is used for the initial transmission. The second one is the proposed scheme where a short packet with higher rate 0.3 containing 160 bits is used in the initial transmission. Subsequently, if the initial packet is not decoded correctly, the gNB will only sends 80 additional bits so that the UE can combine these 80 bits and the initial stored 160 bits to create a packet with 240 bits as the conventional scheme. 
 
-As can be seen at SNR -2dB, BLERs of the conventional scheme with long packet and the combining scheme with short packet are 0.001 and 0.14, respectively. This means that in 1000 times, the conventional scheme succeeds 999 times while the combining scheme succeeds 860 times without a need of retransmisison and combining. Thereby, by using the combining scheme, the system can save time and frequency resources in 860 times with 80 bits equal to 40 REs in QPSK modulation saved each time. This resource can be allocated to other UEs so that the blocking probability of other UEs as well as the UE of interest itself decreases. The final column in Table~\ref{tab1} shows latency reduced due to a decrease of the blocking probability when the proposed scheme is used in a system with 2 UEs and resource pool (CORESET) of 160 REs in each slot for PDCCH. The arrival of data for each UE follows a Poisson process with the average number of random access events in a slot $\lambda$ to be 0.14.
+As can be seen at SNR -2dB, BLERs of the conventional scheme with long packet and the combining scheme with short packet are 0.001 and 0.14, respectively. This means that in 1000 times, the conventional scheme succeeds 999 times while the combining scheme succeeds 860 times without a need of retransmisison and combining. Thereby, by using the combining scheme, the system can save time and frequency resources in 860 times with 80 bits equal to 40 REs in QPSK modulation saved each time. This resource can be allocated to other UEs so that the blocking probability of other UEs as well as the UE of interest itself decreases. 
+
+Fig.~\ref{fig8}\subref{8b} shows latency  when the proposed scheme is used in a system with 2 UEs and resource pool (CORESET) of 160 REs in each slot for PDCCH. The arrival of data for each UE follows a Poisson process with the average number of random access events in a slot $\lambda$. The probability that one UE has one or more random transmissions is: $P_{data} = 1 - e^{-\lambda}$. In the conventional scheme, a packet on PDCCH has size of 120 REs so only PDCCH of a UE can be transmitted in CORESET of a slot and PDCCH of the other UE must wait for the next slots. With SCS of 60kHZ, the average expected latency of a UE in this system is: 
+\begin{equation}
+\begin{split}
+E[T] =& 0.25(1-P_{data}) + 0.5P_{data}(1-P_{data}) \\ 
+&+ 0.75P_{data}^2(1-P_{data}) +...\label{eq4}
+\end{split}
+\end{equation}
+
+In \eqref{eq4}, the first term presents the case that the gNB can transmit PDCCH to the UE of interest and succeeds in the first slot. The subsequent terms are when the gNB must wait one or several slots before transmitting to the UE of interest.
+
+In contrast, a packet's size on PDCCH is only 80 REs in the proposed scheme so 2 UEs can transmit at the same time in a CORESET of a slot. Therefore, when the arrival rate of data is high as can be seen in Fig.~\ref{fig8}\subref{8b} at $\lambda$ bigger than 0.14, the proposed scheme helps to reduce latency because two UEs can transmit at the same rather than one UE waiting for the next slots and the blocking probability decreases.
 
 The proposed scheme also brings an efficiency of resource consumption compared to other schemes applying retransmission and combining in \cite{b3} and \cite{b4}. In the proposed scheme, in total there are 240 bits transmitted in case of the initial transmission's failure (140 times in 1000 times). While in other schemes with conventional HARQ process, an entire packet with lower rate 0.2 containing 240 bits is transmitted in the retransmission after the initial packet's failure with rate 0.3 and 160 bits. In total, there are 400 bits transmitted.
 
-In 140 times, the conventional scheme succeeds in the first transmission while the combining scheme fails and a retransmission is required so that the packets can be combined to have rate 0.2 as the conventional scheme and achieve target reliability. It leads to latency in the proposed scheme. HARQ feedback consumes 1 OFDM symbol. If PDCCH is not decoded, the gNB waits after the normal time for an appearance of feedback to decide PDCCH failure and retransmits the additional bits of both PDCCH and PDSCH. These PDCCH and PDSCH are short versions as mentioned in Section \ref{BB} and only consumes 3 OFDM symbols. The maximum processing time of the decoder to decode the combined PDCCH anf PDSCH is 0.125ms equivalent to 7 OFDM symbols with SCS 60kHz (one slot with SCS 60kHz has 14 OFDM symbols spreading in 0.25ms). Therefore, latency in 140 times over 1000 times of the proposed scheme is at least 11 OFDM symbols more than the conventional schemes. This amount is approximate to 1 slot with 0.25 ms that is still acceptable to achieve the latency requirement 1ms of URLLC.
+In 140 times, the conventional scheme succeeds in the first transmission while the combining scheme fails and a retransmission is required so that the packets can be combined to have rate 0.2 as the conventional scheme and achieve target reliability. It leads to latency in the proposed scheme. HARQ feedback consumes 1 OFDM symbol. If PDCCH is not decoded, the gNB waits after the normal time for an appearance of feedback to decide PDCCH failure and retransmits the additional bits of both PDCCH and PDSCH. These PDCCH and PDSCH are short versions as mentioned in Section \ref{BB} and only consumes 3 OFDM symbols. The maximum processing time of the decoder to decode the combined PDCCH and PDSCH is 0.125ms equivalent to 7 OFDM symbols with SCS 60kHz (one slot with SCS 60kHz has 14 OFDM symbols spreading in 0.25ms). Therefore, latency in 140 times over 1000 times of the proposed scheme is at least 11 OFDM symbols more than the conventional schemes with 1 UE. This amount is approximate to 1 slot with 0.25 ms that is still acceptable to achieve the latency requirement 1ms of URLLC.
 
 Table~\ref{tab1} summarizes the above calculation and shows the expected resource consumption as well as latency over 1000 packets of three schemes at SNR of -2dB and SCS of 60kHz to achieve the same reliability.
 
